@@ -67,3 +67,10 @@ end
 gem "rails-controller-testing", "~> 1.0"
 
 gem "bcrypt", "~> 3.1"
+
+gem "faker", "~> 3.5"
+
+gem "will_paginate", "~> 4.0"
+
+
+gem "will_paginate-bootstrap-style", "~> 0.3.0"

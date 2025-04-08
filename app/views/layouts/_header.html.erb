@@ -6,7 +6,7 @@
             <li><%= link_to "Home",   root_path %></li>
             <li><%= link_to "Help",   help_path %></li>
           <% if logged_in? %>
-            <li><%= link_to "Users", '#' %></li>
+            <li><%= link_to "Users", users_path %></li>
             <li>
               <div class="dropdown">
                 <button type="button" id="account" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -14,7 +14,7 @@
                 </button>
                 <ul id="dropdown-menu" class="dropdown-menu">
                   <li><%= link_to "Profile", current_user ,class: "dropdown-item"%></li>
-                  <li><%= link_to "Settings", '#' ,class: "dropdown-item"%></li>
+                  <li><%= link_to "Settings", edit_user_path(current_user) ,class: "dropdown-item"%></li>
                   <li>
                     <%= link_to "Log out", logout_path,
                                           data: { "turbo-method": :delete } ,class:"dropdown-item"%>
