@@ -1,9 +1,3 @@
-# This Dockerfile is designed for production, not development. Use with Kamal or build'n'run by hand:
-# docker build -t sample_app .
-# docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name sample_app sample_app
-
-# For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
-
 # ベースイメージ
 ARG RUBY_VERSION=3.4.2
 FROM docker.io/library/ruby:$RUBY_VERSION-slim
@@ -16,7 +10,7 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 build-essential git libyaml-dev node-gyp pkg-config python-is-python3 libpq-dev && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# Install JavaScript dependencies
+# nodeとyarnをインストール
 ARG NODE_VERSION=22.14.0
 ARG YARN_VERSION=1.22.22
 ENV PATH=/usr/local/node/bin:$PATH
@@ -39,9 +33,7 @@ RUN yarn install --immutable
 RUN bundle exec bootsnap precompile app/ lib/
 
 
-# Entrypoint prepares the database.
+# DBをマイグレーション
 ENTRYPOINT ["/rails/bin/dev-entrypoint"]
 
-# Start server via Thruster by default, this can be overwritten at runtime
-EXPOSE 3000
 CMD ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"]
